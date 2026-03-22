@@ -57,6 +57,10 @@ menu:
       name: home
       url: /
       weight: 10
+    - identifier: about
+      name: about
+      url: /about/
+      weight: 20
   social:
     - identifier: instagram
       name: Instagram
@@ -78,6 +82,7 @@ params:
   biography:
     name: Farah Aldali
     gender: Female
+    tagline: "Dentist & Skincare Expert from Syria"
     #email: TODO
     first_online: 2025
     knows_about: [
