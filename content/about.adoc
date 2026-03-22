@@ -1,4 +1,6 @@
-= About
+---
+title: Who is Farah Aldali?
+---
 
 *Dr. Farah Aldali* is a Syrian dental professional currently residing in Germany.
 She earned her Bachelor's degree in Dentistry from https://au.edu.sy/en/home[Al Andalus University for Medical Sciences] in Syria and has since dedicated her career to providing excellent dental care and expanding her professional expertise internationally.
