@@ -29,23 +29,37 @@ Hugo Extended 0.157.0+ locally. The theme requires minimum Hugo 0.123.0 (for `.G
 This repo contains the **site content and configuration**. The theme lives in a separate Git repository included as a submodule:
 
 - **Site repo** (this): content, config, static assets
-- **Theme repo** (`themes/toph/`): layouts, CSS, partials, JS — tracked at `git@github.com:justwheel/toph-hugo-theme.git`
+- **Theme repo** (`themes/toph/`): layouts, CSS, partials, data, JS — tracked at `git@github.com:justwheel/toph-hugo-theme.git`
 
-Changes to layouts, CSS (`assets/css/main.css`), or partials require working in the theme repo (also available at `/home/jwheel/git/web/toph-hugo-theme`). The submodule pointer in this repo is updated separately via `git submodule update --remote --rebase`.
+Changes to layouts, CSS (`assets/css/main.css`), partials, or data files require working in the theme repo (also available at `/home/jwheel/git/web/toph-hugo-theme`). The submodule pointer in this repo is updated separately via `git submodule update --remote --rebase`.
 
 If `themes/toph/` does not exist or is empty, the git submodule has not been cloned correctly. Check the `.gitmodules` file in the repository root and run `git submodule update --init` to resolve.
 
 ## Content Structure
 
+- `content/about.adoc` — Biography / about page (AsciiDoc).
 - `content/blog/` — Blog posts (Markdown), organized by `YYYY/MM/slug.md`. Front matter: `title`, `date`, `categories`, `tags`.
 - `content/projects/` — Project profiles with numeric prefix ordering (e.g., `01-project.en.md`). Front matter requires: `title`, `date`, `slug`, `icon`, `hide_sitemap: true`, `categories: ["projects"]`. Translations use `.<lang>.md` suffix.
 - `content/footer/` — Dynamic footer badges. Front matter requires: `categories: ["footer"]`, `hide_sitemap: true`.
 - `content/categories/` — Category term `_index.md` files with human-readable `title` and optional `hide_sitemap: true` to hide from listings.
 - `content/tags/` — Tag term `_index.md` files. Tags with `hide_sitemap: true` are hidden from the word cloud and taxonomy listings.
-- `content/*.adoc` — Root pages often use AsciiDoc format.
 - `static/img/` — Images; `static/archive/` — archived assets.
 
 Structural categories (`footer`, `projects`) are filtered from taxonomy pages via `params.taxonomy_exclude` in config. Individual categories and tags can also be hidden via `hide_sitemap: true` in their `_index.md` front matter.
+
+## AsciiDoc Conventions
+
+AsciiDoc pages use YAML front matter for metadata, just like Markdown pages. **Do NOT use AsciiDoc H1 headers (`= Title`) for the page title** — use `title:` in the front matter instead:
+
+```asciidoc
+---
+title: Who is Farah Aldali?
+---
+
+Content here in AsciiDoc format...
+```
+
+**AsciiDoc detection:** Use `.File.Ext == "adoc"` to detect AsciiDoc content in templates. Do NOT use `.Markup` — it returns an object (not a string) in Hugo 0.157+ and string comparison will silently fail.
 
 ## URL Preservation (NEVER BREAK)
 
@@ -54,11 +68,48 @@ Structural categories (`footer`, `projects`) are filtered from taxonomy pages vi
 ## Configuration
 
 `config.yaml` (YAML, not TOML). Key sections:
-- `taxonomies` — explicit `category: categories`, `tag: tags` mapping
+
+- `params.biography` — name, gender, tagline, email, knows_about
+- `params.social` — social media profiles (see Social Media Platform Registry below)
 - `params.colors` — primary, secondary, accent
 - `params.fonts` — default, title, header (with weights)
 - `params.taxonomy_exclude` — categories hidden from taxonomy listings
-- `languages` — two languages: en (default), ar (RTL)
+- `menu.nav` — site navigation entries (home, about)
+- `languages` — two languages: en (default), ar (RTL, currently disabled)
+
+## Social Media Platform Registry
+
+Social media configuration uses a single source of truth:
+
+1. **`data/social.yaml`** (theme) — Platform registry mapping keys to display names, URL templates, and Bootstrap Icons classes. Entries are alphabetized.
+2. **`params.social`** (site config) — Simple key-value map of platform key → username/handle.
+
+```yaml
+# Example in config.yaml
+params:
+  social:
+    instagram: drfarahaldali
+    threads: drfarahaldali
+    tiktok: farahaldali20
+```
+
+All consumers read from `params.social` + `data/social.yaml`:
+- `hero.html` — renders icon buttons on the homepage
+- `nav.html` — populates the social dropdown in the navbar
+- `seo-meta.html` — builds JSON-LD `sameAs` array
+
+**`menu.social` is NOT used.** Social links derive entirely from `params.social`. Adding a new platform to the theme requires only adding an entry to `data/social.yaml`.
+
+## Homepage Architecture
+
+The homepage (`index.html`) renders in order:
+1. **Hero partial** — profile photo, tagline (`params.biography.tagline`), social media icon buttons, about page link
+2. **For-hire banner** — only if `params.hire_me` is true
+3. **Homepage content** — from `_index.md`/`_index.adoc` if it exists and has content
+4. **Recent posts** — latest blog posts grid
+5. **Projects** — carousel + list, only rendered if pages with `categories: ["projects"]` exist
+
+The h1 page title is rendered by `header.html`, not the hero partial.
 
 ## Taxonomy Templates
 
@@ -83,8 +134,6 @@ Section headings display a clickable 🔗 anchor on hover for sharing direct lin
 - **Markdown:** Uses a render hook at `layouts/_default/_markup/render-heading.html`
 - **AsciiDoc:** Uses `replaceRE` on `.Content` in `single.html` since Asciidoctor bypasses Hugo render hooks
 - Both produce identical `hanchor` class markup and share the same CSS
-
-**AsciiDoc detection:** Use `.File.Ext == "adoc"` to detect AsciiDoc content. Do NOT use `.Markup` — it returns an object (not a string) in Hugo 0.157+ and string comparison will silently fail.
 
 ## GitHub API Access (CRITICAL)
 
