@@ -151,6 +151,10 @@ bh_unicode_properties.cache
 GitHub.sublime-settings
 
 
+##### ---- AI-related files, agents, tools, and other local AI-assisted clients ---- #####
+.superpowers/
+
+
 ##### ---- Vim ---- #####
 # Swap
 [._]*.s[a-v][a-z]
