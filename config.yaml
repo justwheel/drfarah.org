@@ -78,9 +78,9 @@ params:
       "Syria"
     ]
   colors:
-    primary: "#CC9999"
+    primary: "#A64D75"
     secondary: linen
-    accent: "#FFCCCC"
+    accent: "#A8507A"
   description: Homepage of Farah Aldali, a dentist and skincare expert from Syria.
   fonts:
     default: Open Sans
