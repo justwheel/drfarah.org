@@ -103,8 +103,22 @@ params:
 defaultContentLang: en
 languages:
   ar:
-    disabled: true
     languageDirection: rtl
     languageName: عربي
+    title: فرح الدالي
+    menu:
+      nav:
+        - identifier: home
+          name: الرئيسية
+          url: /
+          weight: 10
+        - identifier: about
+          name: حول
+          url: /about/
+          weight: 20
+    params:
+      biography:
+        tagline: "طبيبة أسنان وخبيرة عناية بالبشرة من سوريا"
+      description: "الصفحة الشخصية لفرح الدالي، طبيبة أسنان وخبيرة عناية بالبشرة من سوريا."
   en:
     languageName: English
