@@ -11,7 +11,7 @@
 title: Farah Aldali
 baseURL: https://drfarah.org/
 theme: toph
-languageCode: en-us
+locale: en-us
 enableEmoji: true
 enableGitInfo: true
 enableRobotsTXT: false
@@ -90,7 +90,7 @@ params:
     header_weight: ":wght@500"
   images:
     - /img/logo.jpg
-  git_repo: https://github.com/jwwheeler/drfarah.org
+  git_repo: https://github.com/justwheel/drfarah.org
   hire_me: false
   social:
     instagram: drfarahaldali
@@ -103,8 +103,8 @@ params:
 defaultContentLang: en
 languages:
   ar:
-    languageDirection: rtl
-    languageName: عربي
+    direction: rtl
+    label: عربي
     title: فرح الدالي
     menu:
       nav:
@@ -121,4 +121,4 @@ languages:
         tagline: "طبيبة أسنان وخبيرة عناية بالبشرة من سوريا"
       description: "الصفحة الشخصية لفرح الدالي، طبيبة أسنان وخبيرة عناية بالبشرة من سوريا."
   en:
-    languageName: English
+    label: English

@@ -29,7 +29,7 @@ git submodule update --init
 git submodule update --remote --rebase
 ```
 
-Requires Hugo Extended 0.157.0+ and [Asciidoctor](https://asciidoctor.org/) for AsciiDoc content.
+Requires Hugo Extended 0.161.0+ and [Asciidoctor](https://asciidoctor.org/) for AsciiDoc content.
 
 
 ## Deployment

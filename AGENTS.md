@@ -22,7 +22,7 @@ git submodule update --remote --rebase
 git submodule update --init
 ```
 
-Hugo Extended 0.157.0+ locally. The theme requires minimum Hugo 0.123.0 (for `.GetTerms`).
+Hugo Extended 0.161.0+ locally (theme minimum, see `themes/toph/theme.toml`).
 
 ## Two-Repository Architecture
 
