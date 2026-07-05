@@ -85,7 +85,8 @@ params:
   fonts:
     default: Open Sans
     default_weight: ":wght@500"
-    title: Bungee Shade
+    title: Quicksand
+    title_weight: ":wght@600"
     header: Roboto Slab
     header_weight: ":wght@500"
   images:
