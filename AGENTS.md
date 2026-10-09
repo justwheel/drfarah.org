@@ -90,7 +90,6 @@ params:
   social:
     instagram: drfarahaldali
     threads: drfarahaldali
-    tiktok: farahaldali20
 ```
 
 All consumers read from `params.social` + `data/social.yaml`:
