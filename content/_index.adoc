@@ -1,3 +1,10 @@
 ---
 layout: biography
+images: ["/img/og-default.jpg"]
 ---
+
+Dr. Farah Aldali is a Syrian dentist now living in Germany, where she is working toward full licensure.
+She trained at Al Andalus University for Medical Sciences, ran her own clinic in Tartous for nearly two years, and spent a year providing specialised skincare treatments before moving abroad.
+On Instagram she shares dentistry, skincare, and everyday life in Germany.
+
+Her full story is on the link:/about/[about page].

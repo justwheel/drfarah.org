@@ -1,0 +1,31 @@
+# Site-level overrides for the theme's neutral palette.
+#
+# Toph's muted grays are calibrated against a white page. This site paints
+# #FDF8F2 cream instead, which costs contrast: the theme's #767676 lands at
+# 4.30:1 here, under the 4.5:1 AA floor. Darkening only the two affected text
+# roles to #6E6E6E restores 4.83:1 on cream, 5.10:1 on white cards, and
+# 4.63:1 on the hover surface.
+#
+# The whole `text` group is restated on purpose: Hugo's data merge replaces a
+# top-level group wholesale rather than merging inside it, so listing only the
+# two changed keys would drop `body`, `link`, and `muted` and leave the page on
+# Bootstrap's defaults. If the theme gains a key in this group, add it here.
+#
+# Keep the light:/dark: nesting — the theme flattens group+key into variable
+# names, and a flat `text.secondary` key is silently ignored.
+
+text:
+  light:
+    body: "#330000"
+    muted: "#555"
+    secondary: "#6E6E6E"
+    link: "#003366"
+    link-hover: "#003d82"
+    anchor: "#6E6E6E"
+  dark:
+    body: "#B7A5A5"
+    muted: "#A9A9A9"
+    secondary: "#A9A9A9"
+    link: "#97ACC1"
+    link-hover: "#A4BAD2"
+    anchor: "#ADA99F"

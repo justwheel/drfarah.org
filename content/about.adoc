@@ -1,5 +1,6 @@
 ---
 title: Who is Farah Aldali?
+images: ["/img/og-default.jpg"]
 ---
 
 *Dr. Farah Aldali* is a Syrian dental professional currently residing in Germany.

@@ -9,7 +9,7 @@ Personal website for Farah Aldali at https://drfarah.org/, built with [Hugo](htt
 ## Build & Development
 
 ```bash
-# Local dev server (Hugo Extended required)
+# Local dev server
 hugo server
 
 # Build for production
@@ -22,7 +22,8 @@ git submodule update --remote --rebase
 git submodule update --init
 ```
 
-Hugo Extended 0.161.0+ locally (theme minimum, see `themes/toph/theme.toml`).
+Hugo 0.166.0 or later (the theme's floor, see `themes/toph/theme.toml`).
+Development and CI use 0.170.1, kept in step so a green build means the compiler the site was developed against. Since 0.170.0 the default Hugo binary covers everything this site needs, so there is no edition to select. The site compiles no Sass, but CI still installs Dart Sass: `.github/workflows/hugo.yaml` is kept in sync with the jwheel.org workflow it is copied from, and that workflow pins it.
 
 ## Two-Repository Architecture
 
@@ -31,7 +32,7 @@ This repo contains the **site content and configuration**. The theme lives in a 
 - **Site repo** (this): content, config, static assets
 - **Theme repo** (`themes/toph/`): layouts, CSS, partials, data, JS — tracked at `git@github.com:justwheel/toph-hugo-theme.git`
 
-Changes to layouts, CSS (`assets/css/main.css`), partials, or data files require working in the theme repo (also available at `/home/jwheel/git/web/toph-hugo-theme`). The submodule pointer in this repo is updated separately via `git submodule update --remote --rebase`.
+Changes to layouts, CSS (`assets/css/main.css`), partials, or data files require working in the theme repo (checked out at `themes/toph/` as a submodule). The submodule pointer in this repo is updated separately via `git submodule update --remote --rebase`.
 
 If `themes/toph/` does not exist or is empty, the git submodule has not been cloned correctly. Check the `.gitmodules` file in the repository root and run `git submodule update --init` to resolve.
 
@@ -71,11 +72,32 @@ Content here in AsciiDoc format...
 
 - `params.biography` — name, gender, tagline, email, knows_about
 - `params.social` — social media profiles (see Social Media Platform Registry below)
-- `params.colors` — primary, secondary, accent
+- `params.colors.light` / `params.colors.dark` — brand palette. **The nesting is mandatory**: the theme reads only these subtrees, and a flat `colors.primary` key is silently ignored (this site rendered uncolored for weeks because of it). Keys are `primary`, `secondary`, `accent`, `background`; `dark` falls back to `light` per key, and `background` falls back to `secondary`. See "Brand palette and dark mode" below.
+- `params.color_mode` — `auto` (default, OS preference plus navbar toggle), `light`, or `dark`
 - `params.fonts` — default, title, header (with weights)
+- `params.hero.shape` — `circle` (default), `square`, or `none`
+- `params.legal.license` — `name`, `url`, `title` for the footer copyright line
+- `params.date_format` — Go time layout; this site uses `"02 January 2006"`
+- `params.favicon` — defaults to `/favicon.ico`
+- `params.images` — **triple-purpose**: `[0]` is the hero photo, the OG/Twitter fallback, and the Person JSON-LD image. Do not put a 1200×630 social card here; set page-level `images:` front matter instead.
 - `params.taxonomy_exclude` — categories hidden from taxonomy listings
+- `disableKinds` — suppresses `taxonomy` and `term` output because there is no blog yet; `categories` front matter still drives projects and footer content
 - `menu.nav` — site navigation entries (home, about)
-- `languages` — two languages: en (default), ar (RTL, currently disabled)
+- `languages` — two languages: en (default), ar (RTL), both active, with explicit `weight` values so `hreflang` and the switcher stay deterministically ordered
+
+## Brand palette and dark mode
+
+Light-mode brand colors are baked into the compiled stylesheet; dark-mode values are emitted as an inline `<style>` block, so the dark set can change without a rebuild.
+
+The navbar is `--primary` with `--secondary` text, which constrains the dark palette: brightening the primary for dark mode drops cream nav text below AA. This site deepens the primary instead (`#7A2E4A`), and headings recover contrast through the theme's `color-mix(in srgb, var(--primary) 60%, white)`.
+
+`--accent-color` doubles as a surface behind `--secondary` text (brand chip, active nav item, theme toggle, dropdown hover, tag badges) **and** as the nav hover underline. That is why the dark accent stays deep (`#5B1A33`): a bright accent would make cream text on those surfaces fail. The hover underline is consequently low-contrast; the hover state also changes the background, so it stays perceivable. Tracked upstream in the theme repo as the accent-token split.
+
+Re-check contrast against the lightest surface a text role can land on, not just the page background, and verify both modes with a `params.color_mode: dark` overlay build.
+
+## Machine-readable index
+
+`data/llms.yaml` enables `/llms.txt` and publishes unmodified sources under `/source/en/` and `/source/ar/`. The index itself is written in exactly one language (`index.language`); the `sources.languages: all` setting is what makes it bilingual. Delete the file to turn the feature off.
 
 ## Social Media Platform Registry
 

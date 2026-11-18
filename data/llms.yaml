@@ -1,0 +1,39 @@
+# Machine-readable index (/llms.txt) and native source publishing.
+#
+# Opt-in by design: Toph ships no data file at the theme root, so this file is
+# what turns the feature on for drfarah.org. Delete it to remove every trace.
+# Schema: themes/toph/README.md, "Machine-readable index and source files".
+
+enabled: true
+
+# The human-facing index is written once per build, in exactly one language.
+# Source files themselves are published for every language listed below.
+index:
+  enabled: true
+  language: en
+  title: Farah Aldali
+  summary: Dentist and skincare expert from Syria, now living in Germany.
+  intro: |
+    Public biography, projects, and About page for Dr. Farah Aldali.
+
+sources:
+  enabled: true
+  prefix: source
+  languages: all
+  exclude_sections: []
+  exclude_pages: []
+
+sections:
+  - title: Pages
+    pages:
+      - /
+      - /about
+
+  - title: Projects
+    section: projects
+
+optional:
+  - title: Sitemap
+    url: sitemap.xml
+  - title: RSS feed
+    url: rss/index.xml

@@ -12,7 +12,7 @@ Work on this site began in June 2025.
 
 ## Build & Development
 
-The site is built with [Hugo](https://gohugo.io) (Extended edition required) and uses the [Toph](https://github.com/justwheel/toph-hugo-theme) theme.
+The site is built with [Hugo](https://gohugo.io) and uses the [Toph](https://github.com/justwheel/toph-hugo-theme) theme.
 See the theme documentation for details on layouts, configuration options, and features.
 
 ```bash
@@ -29,7 +29,7 @@ git submodule update --init
 git submodule update --remote --rebase
 ```
 
-Requires Hugo Extended 0.161.0+ and [Asciidoctor](https://asciidoctor.org/) for AsciiDoc content.
+Requires Hugo 0.166.0 or later (CI and local development use 0.170.1) and [Asciidoctor](https://asciidoctor.org/) for AsciiDoc content.
 
 
 ## Deployment
